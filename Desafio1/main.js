@@ -1,3 +1,5 @@
+// Algoritmo:  Conjunto de ordenes, ordenadas, y finitas para resolver un problema.
+
 alert("Hola bienvenido, vamos a calcular cual sera la ganancia en tu plazo fijo");
 
 let monto =  parseFloat(prompt("cual va a ser el monto a ingresar?"));
