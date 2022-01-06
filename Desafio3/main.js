@@ -1,3 +1,4 @@
+// un algoritmo que contiene ciclo, emplea cierta instruccion reiterada cantidad de veces, con un limite claro.
 alert("Hola, bienvenido!!\n Vamos a armar el arbol de navidad!!");
 let h = 0;
 let star = ""
@@ -6,7 +7,7 @@ while(h <= 1){
     if(h > 1){
         for(var i=0; i<=(h * 2) - 1; i += 2){
             for(var k = 1; k < h - i / 2; k++){
-                star += "_";|
+                star += "_";
             };
             for(var j=0; j<=i; j++) {
                 star += "*";
