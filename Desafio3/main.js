@@ -1,4 +1,5 @@
 // un algoritmo que contiene ciclo, emplea cierta instruccion reiterada cantidad de veces, con un limite claro.
+//----------------------------------------------------------------
 alert("Hola, bienvenido!!\n Vamos a armar el arbol de navidad!!");
 let h = 0;
 let star = ""
