@@ -1,3 +1,6 @@
+// las funciones son muy utiles para resolver un problema por partes, y no repetir codigo.
+// una funcion es una serie de pasos generales para resolver por lo general un problema o una parte del problema
+
 // funcion que realize para que el codigo quedara mas legible, transforma un entero(porcentaje) en su respectivo decimal
 
 function PorcToFloat(p) {
