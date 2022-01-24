@@ -1,0 +1,4 @@
+node_modules
+/FinalProject/node_modules
+tailwind.config.js
+/Styles/template.css
