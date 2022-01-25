@@ -1,25 +1,9 @@
 /*jshint esversion: 11 */
 
-/* 
-    Primera entrega del proyecto final: 
-    Aplicacion de mensajeria, su funcion sera simular una aplicacion de mensajeria, se podra hablar por chat, 
-    si puedo, crear una base de datos(quiza), se podra agregar a amigos, guardar mensajes, enviar gifs
-
-    estoy trabajando en paralelo el diseño del sitio (con tailwind)
-    y esto son los objetivos
-    Objetivos Específicos de la entrega:
-        - Capturar entradas mediante prompt().✅
-        - Declarar variables y objetos necesarios para simular el proceso seleccionado.✅
-        - Crear funciones y/o métodos para realizar operaciones (suma, resta, concatenación, división, porcentaje, etc).✅
-        - Efectuar una salida, que es el resultado de los datos procesados, la cual puede hacerse por alert() o console.log().✅
-    ideas 💡: 
-        - integrar api de giphy o alguna otra api que este interesante 
-        - quiza integrar una base de datos (no se usar bases de datos xd)
-*/
 
 // A pathname for redirect, when i deploy that dont be necessary
 const pathname = "/FinalProject";
-// verify if you already has registered
+
 
 
 // load page and you are signed up
@@ -34,7 +18,6 @@ addEventListener("load", ()=>{
     if(account){
         if(window.location.pathname != pathname + "/index.html") window.location.href  =  pathname + "/index.html";
         console.log(window.location.pathname);
-        console.log(account);
     // if we arent loged, and we are in index, redirect to the
     }else{
         if(window.location.pathname == pathname + "/index.html") window.location.href =  pathname + "/login.html";
@@ -110,15 +93,15 @@ function dispalyAlertMessage(msg, el, color){
 // ------------------------------ Verifications -------------------------
 
 function verifyRegister({username, firstName, lastName, email, password, passwordConfirmation}) {
-    if(username.length < 8) return [true, "Username need to be at least 8 characters long"];
-    if(username.length > 14) return [true, "The username must have a maximum of 8 characters"];
+    if(username.length < 6) return [true, "Username need to be at least 6 characters long"];
+    if(username.length > 16) return [true, "The username must have a maximum of 16 characters"];
     if(verifyUsernameInDB(username)) return [true, "The username has already registered"];
     if(username === "") return [true, "You need to provide a username"];
     if(firstName === "") return [true, "You need to provide a first name"];
     if(lastName === "") return [true, "You need to provide a last name"];
     if(email === "") return [true, "You need to provide a email"];
     if(password.length < 8) return [true, "password need to be at least 8 characters long"];
-    if(password.length > 14) return [true, "The password must have a maximum of 8 characters"];
+    if(password.length > 14) return [true, "The password must have a maximum of 14 characters"];
     if(password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm) === null) return [true, "The password need at least one uppercase letter, one lowercase letter and one number"];
     if(password !== passwordConfirmation) return [true, "The passwords not match"];
     return [false, null];
@@ -166,6 +149,7 @@ function register(e){
 }
 
 //  ----------------------------- sign in -----------------------------
+
 if(document.getElementById("loginForm")){
     const loginForm = document.getElementById("loginForm");
 loginForm.addEventListener("submit", function(e) {
@@ -210,4 +194,53 @@ function verifyLogin(username, password, stayLogged) {
         dispalyAlertMessage("el password es incorrecto", document.getElementById("alert"), "red");
     }
 }
+
+
+// ---------------------------------------- Index ----------------------------------------------------------------
+
+// When you was logged in
+
+// Manage aside hover
+
+if(document.getElementById("aside-container")){
+    const aside = document.getElementById("aside-container");
+
+aside.addEventListener("mouseenter", ()=>{
+    document.querySelectorAll(".maximized").forEach(it => {
+        it.classList.remove("hidden");
+    });
+});
+aside.addEventListener("mouseleave", ()=>{
+    document.querySelectorAll(".maximized").forEach(it => {
+        it.classList.add("hidden");
+    });
+});
+}
+
+// Show profile
+if(document.getElementById("profileBtn")){
+    document.getElementById("profileBtn").addEventListener("click", async ()=>{
+        const profile = JSON.parse(localStorage.getItem("account")) || JSON.parse(sessionStorage.getItem("account"));
+        console.log(profile);
+        // const avatar = await fetch(`https://avatars.abstractapi.com/v1/?api_key=54449c83799d414ca1bca0c4519257a1&name=${profile.firstName} ${profile.lastName}`).then(res => res.url);
+        let av = await `https://avatars.abstractapi.com/v1/?api_key=54449c83799d414ca1bca0c4519257a1&name=${profile.firstName} ${profile.lastName}&image_size=440`;
+        const profileCard = `
+        <div class="bg-white font-semibold text-center rounded-3xl border shadow-lg p-10 max-w-xs m-auto">
+                <img class="mb-3 w-32 h-32 rounded-full shadow-lg mx-auto" src="${av}" alt="product designer">
+                <h2 class="text-lg text-gray-700"> ${profile.username} </h2>
+                <h3 class="text-sm text-gray-400 "> ${profile.firstName} ${profile.lastName} </h3>
+                <p class="text-xs text-gray-400 mt-4">status: ${profile.status}</p>
+                <button class="bg-gray-800 px-8 py-2 mt-8 rounded-3xl text-gray-100 font-semibold uppercase tracking-wide">Edit Profile</button>
+            </div>
+        `;
+        const profileDiv = document.createElement('div');
+        profileDiv.innerHTML = profileCard;
+        profileDiv.id = "content";
+        if(document.getElementById("content")) document.getElementById("main").removeChild(document.getElementById("content"));
+        document.getElementById("main").appendChild(profileDiv);
+    
+    });
+}
+
+
 
