@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+</head>
+<body>
+    <div class=" sm:py-10 sm:px-32 h-screen ">
+        <div class="sm:border sm:rounded-2xl w-full flex h-full shadow-lg">
+            <aside class="border-r   flex flex-col justify-between px-1">
+                <button class="p-2 mt-2 hover:bg-zinc-300 rounded border-b">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M10 11V8l5 4-5 4v-3H1v-2h9zm-7.542 4h2.124A8.003 8.003 0 0 0 20 12 8 8 0 0 0 4.582 9H2.458C3.732 4.943 7.522 2 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10c-4.478 0-8.268-2.943-9.542-7z"/></svg>
+                </button>
+                <nav class="mb-4">
+                    <ul>
+                        <li class="p-2 border-t hover:bg-zinc-400 rounded cursor-pointer ">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M12 18.26l-7.053 3.948 1.575-7.928L.587 8.792l8.027-.952L12 .5l3.386 7.34 8.027.952-5.935 5.488 1.575 7.928L12 18.26zm0-2.292l4.247 2.377-.949-4.773 3.573-3.305-4.833-.573L12 5.275l-2.038 4.42-4.833.572 3.573 3.305-.949 4.773L12 15.968z"/></svg>
+                        </li>
+                        <li class="p-2 border-t hover:bg-zinc-400 rounded cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M4 22a8 8 0 1 1 16 0h-2a6 6 0 1 0-12 0H4zm8-9c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6zm0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"/></svg>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+            <main class=" h-full w-full flex flex-col relative">
+                <header class="flex items-center p-2 bg-zinc-100 gap-4 font-bold">
+                    <img class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300" src="https://upload.wikimedia.org/wikipedia/commons/9/97/Anonim.png">
+                    <h2>Anon Chat</h2>
+                </header>
+                <section class="h-full flex flex-col flex-grow p-4 overflow-auto" id="messageList">
+                        
+                </section>
+                <form class="px-4 w-full p-2" id="sendMessage">
+                    <input name="message" id="messageToSend" class="w-full border rounded-2xl resize-none px-5 py-1 text-justify min-w-fit max-w-prose break-all" placeholder="Message to send (press enter to send)">
+                </form>
+            </main>
+        </div>
+    </div>
+    <script type="module" src="./main.js"></script>    
+</body>
+</html>
