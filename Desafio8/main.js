@@ -59,6 +59,10 @@ function manageMessage(){
     localStorage.setItem('messages', JSON.stringify(messages));
 }
 
+function addZeros(time){
+    return time > 10 ? time : "0" + time;
+}
+
 function updateMessageList(){
     const fragment = document.createDocumentFragment();
     for(let msg of messages){
@@ -72,13 +76,13 @@ function updateMessageList(){
                                                         <div class="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg break-all">
                                                             <p class="text-sm">${message}</p>
                                                         </div>
-                                                        <span class="text-xs text-gray-500 leading-none" >${timestamp.getDate()} ${new Intl.DateTimeFormat('es-ES', {month: "short"}).format(timestamp.getMonth())} ${timestamp.getHours()}:${timestamp.getMinutes()}</span>
+                                                        <span class="text-xs text-gray-500 leading-none" >${timestamp.getDate()} ${new Intl.DateTimeFormat('es-ES', {month: "short"}).format(timestamp.getMonth())} ${timestamp.getHours()}:${addZeros(timestamp.getMinutes())}</span>
                                                     </div>`
                                                 : `<div>
                                                         <div class="bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg break-all">
                                                             <p class="text-sm">${(message)}</p>
                                                         </div>
-                                                        <span class="text-xs text-gray-500 leading-none">${timestamp.getDate()} ${new Intl.DateTimeFormat('es-ES', {month: "short"}).format(timestamp.getMonth())} ${timestamp.getHours()}:${timestamp.getMinutes()}</span>
+                                                        <span class="text-xs text-gray-500 leading-none">${timestamp.getDate()} ${new Intl.DateTimeFormat('es-ES', {month: "short"}).format(timestamp.getMonth())} ${timestamp.getHours()}:${addZeros(timestamp.getMinutes())}</span>
                                                     </div>
                                                     <img class="flex-shrink-0 h-10 w-10 rounded-full bg-gray-300" src="${profilePic}">`;
         div.innerHTML = msgHTML;
