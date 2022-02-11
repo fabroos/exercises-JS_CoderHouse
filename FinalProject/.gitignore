@@ -1,4 +1,4 @@
 node_modules
-/FinalProject/node_modules
+./styles/template.css
 tailwind.config.js
-/Styles/template.css
+package-lock.json

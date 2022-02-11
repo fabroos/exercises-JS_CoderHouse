@@ -1,61 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./styles/styles.css">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="./styles/style.css">
 </head>
+
 <body>
-    	<!-- Component Start -->
-	<div class="dark:bg-gray-700 flex items-center">
-		<div class="flex flex-col items-center  text-gray-400 bg-gray-900 h-screen z-10 " id="aside-container">
-			<div class="minimized ">
-				<a class="flex items-center justify-center mt-3" href="#">
-					<svg class="w-8 h-8 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-						<path d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L4.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z" />
-					</svg>
-				</a>
-				<div class="flex flex-col items-center mt-3 border-t border-gray-700">
-					<a class="flex items-center justify-center h-12 mt-2 rounded hover:bg-gray-700 hover:text-gray-300 px-4" href="#">
-						<svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-							 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-						</svg>
-						<div class="px-3 w-16 maximized hidden transition-all">Home</div>
+
+	<!-- Header -->
+	<header class=" lg:grid lg:grid-cols-12 w-full  lg:relative flex flex-col lg:p-4 items-center sticky">
+		<div class="col-span-2">
+			<h1 class="font-bold text-2xl mr-auto">Clothely</h1>
+		</div>
+		<nav class=" col-start-4 col-span-6 m-auto">
+			<ul class="flex text-gray-500 lg:gap-10 lg:flex-row flex-col gap-1">
+				<li class="hover:text-black hover:scale-110 cursor-pointer">New Arrivals</li>
+				<li class="hover:text-black hover:scale-110 cursor-pointer">Categories</li>
+				<li class="hover:text-black hover:scale-110 cursor-pointer">Contact</li>
+				<li class="hover:text-black hover:scale-110 cursor-pointer">About us</li>
+			</ul>
+		</nav>
+		</div>
+		<ul class="flex text-gray-500 col-start-11 w-full col-end-13 lg:gap-10 lg:flex-row flex-col gap-1">
+			<li>Cart</li>
+			<li>Login</li>
+		</ul>
+	</header>
+	<!-- Featured Products -->
+	<section class="w-full bg-yellow-50 p-20 relative bg-hero flex flex-col items-center gap-10">
+		<h2 class="text-3xl font-bold text-center">Autumn style</h2>
+		<p class="font-bold text-xl">Buy the best seasonal clothes</p>
+		<a href=""
+			class="font-semibold px-6 py-2 bg-orange-300 hover:bg-orange-400 shadow-sm shadow-orange-300/80 rounded-md">
+			Get started</a>
+	</section>
+	<section class="bg-white py-8">
+
+		<!-- Section -->
+		<div class="container mx-auto pt-4 pb-12">
+			<nav id="store" class="w-full z-30 top-0 px-6 py-1">
+				<div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 px-2 py-3">
+
+					<a class="uppercase tracking-wide no-underline hover:no-underline font-bold text-gray-800 text-xl "
+						href="#">
+						Store
 					</a>
-					<a class="flex items-center justify-center  h-12 mt-2 rounded hover:bg-gray-700 hover:text-gray-300 px-4" href="#">
-						<svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-						</svg>
-						<div class="px-3 w-16 maximized hidden">Home</div>
-					</a>
-					<a class="flex items-center justify-center  h-12 mt-2 text-gray-200 bg-gray-700 rounded px-4" href="#">
-						<svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-						</svg>
-						<div class="px-3 w-16 maximized hidden">Home</div>
-					</a>
-					<a class="flex items-center justify-center h-12 mt-2 rounded hover:bg-gray-700 hover:text-gray-300 px-4" id="profileBtn">
-						<svg class="w-6 h-6 stroke-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
-						</svg>
-						<div class="px-3 w-16 maximized hidden">Profile</div>
-					</a>
+
+					<div class="flex items-center" id="store-nav-content">
+
+						<a class="search pl-3 inline-block no-underline hover:text-black" id="toggleSearch">
+							<input type="text" class="input border-b border-black" placeholder="Search..."
+								id="searchInput">
+							<svg class="btn fill-current hover:text-black" xmlns="http://www.w3.org/2000/svg" width="24"
+								height="24" viewBox="0 0 24 24">
+								<path
+									d="M10,18c1.846,0,3.543-0.635,4.897-1.688l4.396,4.396l1.414-1.414l-4.396-4.396C17.365,13.543,18,11.846,18,10 c0-4.411-3.589-8-8-8s-8,3.589-8,8S5.589,18,10,18z M10,4c3.309,0,6,2.691,6,6s-2.691,6-6,6s-6-2.691-6-6S6.691,4,10,4z" />
+							</svg>
+						</a>
+						<a class="pl-3 inline-block no-underline hover:text-black" href="#" id="toggleSort">
+							<svg class="fill-current hover:text-black" xmlns="http://www.w3.org/2000/svg" width="24"
+								height="24" viewBox="0 0 24 24">
+								<path d="M7 11H17V13H7zM4 7H20V9H4zM10 15H14V17H10z" />
+							</svg>
+						</a>
+						<a class="pl-3 inline-block no-underline hover:text-black" href="#" id="orderBy">
+							<select type="text" id="opt">
+								<option value="trending">trending</option>
+								<option value="price">price</option>
+								<option value="title">name</option>
+							</select>
+						</a>
+
+
+						<a class="pl-3 inline-block no-underline hover:text-black" href="#">
+
+						</a>
+
+					</div>
+				</div>
+			</nav>
+
+
+			<!-- Gallery  -->
+			<div class="grid mx-auto gallery relative" id="galleryNav">
+
+			</div>
+
+		</div>
+	</section>
+
+
+	<footer class="container mx-auto bg-white py-8 border-t border-gray-400">
+		<div class="container flex px-3 py-8 ">
+			<div class="w-full mx-auto flex flex-wrap">
+				<div class="flex w-full lg:w-1/2 ">
+					<div class="px-3 md:px-0">
+						<h3 class="font-bold text-gray-900">About</h3>
+						<p class="py-4">
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas vel mi ut felis tempus
+							commodo
+							nec id erat. Suspendisse consectetur dapibus velit ut lacinia.
+						</p>
+					</div>
+				</div>
+				<div class="flex w-full lg:w-1/2 lg:justify-end lg:text-right">
+					<div class="px-3 md:px-0">
+						<h3 class="font-bold text-gray-900">Social</h3>
+						<ul class="list-reset items-center pt-3">
+							<li><a class="inline-block no-underline hover:text-black hover:underline py-1"
+									href="#">Instagram</a></li>
+							<li><a class="inline-block no-underline hover:text-black hover:underline py-1"
+									href="#">Facebook</a></li>
+							<li><a class="inline-block no-underline hover:text-black hover:underline py-1"
+									href="#">Twitter</a></li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
-		<!-- Component End  -->
-	
-		<!-- component -->
+	</footer>
 
-		<main class="m-auto " id="main">
-
-		</main>
-
-	</div>
-
-
-    <script src="./main.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="main.js"></script>
 </body>
+
 </html>

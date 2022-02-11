@@ -1,246 +1,206 @@
-/*jshint esversion: 11 */
+const ordering = {
+	category: "all",
+	sorted: true
+};
 
 
-// A pathname for redirect, when i deploy that dont be necessary
-const pathname = "/FinalProject";
+// Servicios
 
-
-
-// load page and you are signed up
-
-addEventListener("load", ()=>{
-
-    const account = localStorage.getItem("account") ?? sessionStorage.getItem("account");
-    const user = JSON.stringify(account);
-
-
-    // if we are loged redirect to index
-    if(account){
-        if(window.location.pathname != pathname + "/index.html") window.location.href  =  pathname + "/index.html";
-        console.log(window.location.pathname);
-    // if we arent loged, and we are in index, redirect to the
-    }else{
-        if(window.location.pathname == pathname + "/index.html") window.location.href =  pathname + "/login.html";
-
-    }
-
-    const loged = sessionStorage.getItem("recentLoged") || false;
-    if(loged){
-        dispalyAlertMessage("Registered successfully", document.getElementById("alert"), "green");
-        sessionStorage.removeItem("recentLoged");
+async function getProducts() {
+	let res;
+	await $.ajax({
+		type: "GET",
+		url: "https://fakestoreapi.com/products",
+		data: "data",
+		dataType: "JSON",
+		success: function (response) {
+			res = response;
+		}
+	});
+	return res;
 }
+
+
+// este no lo use al final
+async function getSingleProduct(id) {
+	let product;
+	await $.ajax({
+		type: "GET",
+		url: "https://fakestoreapi.com/products/" + id,
+		data: "data",
+		dataType: "JSON",
+		success: function (response) {
+			product = response;
+		}
+	});
+	return product;
+}
+
+
+
+// funcion para mostrar un producto solo
+
+function displaySingleProduct(product, products) {
+	console.log(product);
+	const {
+		title,
+		image,
+		price,
+		id,
+		description
+	} = product;
+	$("#galleryNav").empty();
+	$("#galleryNav").append(`
+		<div id="backBtn" class="absolute top-5 right-5 font-bold hover:underline cursor-pointer">Go Back</div>
+		<div class=" p-6 flex flex-col mx-auto h-full col-span-4">
+				<div href="#" class="h-full relative pb-8">
+					<img class="hover:grow hover:shadow-lg w-96 h-96 object-contain object-center p-2 m-auto"
+						src="${image}" id="${id}">
+					<div class="pt-3 flex items-center justify-between">
+						<div class="flex flex-col">
+							<p class="">${title}</p>
+							<p class="text-sm text-gray-600 max-w-prose">${description}</p>
+						</div>
+						<svg class="h-6 w-6 fill-current mx-2 text-gray-500 hover:text-black " xmlns="http://www.w3.org/2000/svg"
+							viewBox="0 0 24 24">
+							<path
+								d="M12,4.595c-1.104-1.006-2.512-1.558-3.996-1.558c-1.578,0-3.072,0.623-4.213,1.758c-2.353,2.363-2.352,6.059,0.002,8.412 l7.332,7.332c0.17,0.299,0.498,0.492,0.875,0.492c0.322,0,0.609-0.163,0.792-0.409l7.415-7.415 c2.354-2.354,2.354-6.049-0.002-8.416c-1.137-1.131-2.631-1.754-4.209-1.754C14.513,3.037,13.104,3.589,12,4.595z M18.791,6.205 c1.563,1.571,1.564,4.025,0.002,5.588L12,18.586l-6.793-6.793C3.645,10.23,3.646,7.776,5.205,6.209 c0.76-0.756,1.754-1.172,2.799-1.172s2.035,0.416,2.789,1.17l0.5,0.5c0.391,0.391,1.023,0.391,1.414,0l0.5-0.5 C14.719,4.698,17.281,4.702,18.791,6.205z" />
+						</svg>
+					</div>
+					<div class="flex justify-between mt-2">
+						<p class="pt-1  text-gray-900">$${price}</p>
+						<svg title="Add to cart"  class=" h-6 w-6 cursor-pointer fill-current text-gray-500 mx-2 hover:text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M4 16V4H2V2h3a1 1 0 0 1 1 1v12h12.438l2-8H8V5h13.72a1 1 0 0 1 .97 1.243l-2.5 10a1 1 0 0 1-.97.757H5a1 1 0 0 1-1-1zm2 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm12 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>
+					</div>
+					
+				</div>
+			</div>`);
+	// Route para volver atras 
+	$("#backBtn").click(function (e) {
+		e.preventDefault();
+		displayProducts(products, "");
+		$("#store").show();
+	});
+}
+
+// funcion para devolver el producto con el id pasado como parametro
+function findProductId(products, el) {
+	const id = el.attr("id");
+	return products.find(p => p.id == id);
+}
+
+function displayProducts(products, query, ascendent, order) {
+	// si hay un parametro de busqueda filtra esos resultados
+	products = query == "" ? products : products.filter(product => product.title.toLowerCase().includes(query));
+	// ordena los parametros por el parametro indicado
+	products = orderBy(products, order);
+	console.log(products);
+
+	// y lo ordena de mayor a menor segun el global state
+	if (ascendent) products.sort();
+	else products.reverse();
+
+	// vacio el container y lo lleno si el array tiene por lo menos un objeto y genero un enroutador por id
+	$("#galleryNav").empty();
+	if (products.length > 0) {
+		for (const product of products) {
+			const {
+				image,
+				title,
+				price,
+				id,
+				category
+			} = product;
+			$("#galleryNav").append(`
+			<div class=" p-6 flex flex-col mx-auto h-full">
+					<a href="#" class="h-full relative pb-8">
+						<img class="hover:grow hover:shadow-lg w-96 h-96 object-contain object-center p-2"
+							src="${image}" id="${id}">
+						<div class="pt-3 flex items-center justify-between">
+							<p class="">${title}</p>
+							<svg class="h-6 w-6 fill-current text-gray-500 hover:text-black" xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 24 24">
+								<path
+									d="M12,4.595c-1.104-1.006-2.512-1.558-3.996-1.558c-1.578,0-3.072,0.623-4.213,1.758c-2.353,2.363-2.352,6.059,0.002,8.412 l7.332,7.332c0.17,0.299,0.498,0.492,0.875,0.492c0.322,0,0.609-0.163,0.792-0.409l7.415-7.415 c2.354-2.354,2.354-6.049-0.002-8.416c-1.137-1.131-2.631-1.754-4.209-1.754C14.513,3.037,13.104,3.589,12,4.595z M18.791,6.205 c1.563,1.571,1.564,4.025,0.002,5.588L12,18.586l-6.793-6.793C3.645,10.23,3.646,7.776,5.205,6.209 c0.76-0.756,1.754-1.172,2.799-1.172s2.035,0.416,2.789,1.17l0.5,0.5c0.391,0.391,1.023,0.391,1.414,0l0.5-0.5 C14.719,4.698,17.281,4.702,18.791,6.205z" />
+							</svg>
+						</div>
+						<p class="pt-1 absolute bottom-0 text-gray-900">$${price}</p>
+					</a>
+				</div>`);
+		}
+		// activo el enroutador cuando se le declick
+		$("#galleryNav img").click(async function (e) {
+			const product = findProductId(products, $(this));
+			displaySingleProduct(product, products);
+			$("#store").hide();
+		});
+	} else {
+		$("#galleryNav").append(`<h4 class="text-2xl font-bold col-span-4 p-3 text-center">No resoults found</h4>`);
+	}
+}
+
+
+// Setting a funtion to get the prodcts and save him in sessionStorage to save resourses 
+
+async function updateProducts(query = "") {
+	$("#galleryNav").append(`<img class="col-span-4 mx-auto" src="https://c.tenor.com/tEBoZu1ISJ8AAAAC/spinning-loading.gif">`);
+	const products = JSON.parse(sessionStorage.getItem("products")) || await getProducts();
+	console.log($("#opt").val());
+	if (!sessionStorage.getItem("products")) sessionStorage.setItem("products", JSON.stringify(products));
+
+	$("#galleryNav").empty();
+	displayProducts(products, query, ordering.sorted, $("#opt").val());
+}
+
+
+// Orders parameters
+
+function ToggleSort() {
+	ordering.sorted = !ordering.sorted;
+	updateProducts();
+}
+
+function toggleSearch(e) {
+	console.log("gol");
+	e.preventDefault();
+	$(".search").toggleClass('active');
+	$(".input").focus();
+}
+
+function orderBy(list, by) {
+	if (by == "trending") return list;
+	return list.sort((a, b) => {
+		if (a[by] < b[by]) {
+			return -1;
+		}
+		if (a[by] > b[by]) {
+			return 1;
+		}
+		return 0;
+	});
+}
+
+
+
+
+$(document).ready(async function () {
+	updateProducts();
+	$("#toggleSort").click(ToggleSort);
+	$("#toggleSearch svg").click(toggleSearch);
+	$('#searchInput:input').on('propertychange input', function (e) {
+		var valueChanged = false;
+
+		if (e.type == 'propertychange') {
+			valueChanged = e.originalEvent.propertyName == 'value';
+		} else {
+			valueChanged = true;
+		}
+		if (valueChanged) {
+			console.log(this);
+			updateProducts(this.value.toLowerCase());
+		}
+	});
+	$("#opt").change(function (e) {
+		e.preventDefault();
+		updateProducts($("searchInput").val());
+	});
 });
-
-
-
-// declaring variables and classes
-
-
-
-class User {
-    constructor(username, firstName, lastName, email, password){
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.saldo = "a";
-        this.status = "Disponible";
-    }
-    // agrego esto para cumplir el objetivo 3 de la entrega (Crear funciones y/o métodos para realizar operaciones (suma, resta, concatenación, división, porcentaje, etc).)
-    
-    doTransition(amount){
-        if(isNaN(parseInt(amount))) return alert("debes ingresar un valor numerico");
-        if(amount < 0) return alert("debes ingresar un valor positivo");
-        
-        let res = this.saldo - amount;
-        if(res < 0) return alert("error, no dismones de esa cantidad de saldo");
-
-
-        this.saldo = res;
-        return alert(`operacion realizada con exito, tu nuevo saldo es: ${this.saldo}`);
-    }
-    changeStatus(newStatus){
-        this.status = newStatus;
-    }
-    displayResults(){
-        return "welcome " + this.firstName.toUpperCase() + "\n" + Object.keys(this).map(p => "-" + p + " : " + this[p]).join("\n");
-    }
-}
-
-const accounts = localStorage.getItem("accounts") ? JSON.parse(localStorage.getItem("accounts")) : [];
-
-
-// ------------ create users to test ----------
-accounts.push( new User("a", "a", "a", "a", "a", "a", "a", "a","a" ));
-accounts.push( new User("b", "b", "b", "b", "b", "b", "a", "b","a" ));
-
-// ---------------------------- Alerts ----------------------------
-
-function dispalyAlertMessage(msg, el, color){
-    const alertHTML = ` 
-                        <div class="w-full text-white bg-${color}-500 ">
-                            <div class="container flex items-center justify-between px-6 py-4 mx-auto">
-                                <div class="">
-                                    <p class="mx-3 max-w-prose text-xs">${msg}</p>
-                                </div>
-                            </div>
-                        </div>
-                        `;
-    el.innerHTML = alertHTML;
-}
-
-// ------------------------------ Verifications -------------------------
-
-function verifyRegister({username, firstName, lastName, email, password, passwordConfirmation}) {
-    if(username.length < 6) return [true, "Username need to be at least 6 characters long"];
-    if(username.length > 16) return [true, "The username must have a maximum of 16 characters"];
-    if(verifyUsernameInDB(username)) return [true, "The username has already registered"];
-    if(username === "") return [true, "You need to provide a username"];
-    if(firstName === "") return [true, "You need to provide a first name"];
-    if(lastName === "") return [true, "You need to provide a last name"];
-    if(email === "") return [true, "You need to provide a email"];
-    if(password.length < 8) return [true, "password need to be at least 8 characters long"];
-    if(password.length > 14) return [true, "The password must have a maximum of 14 characters"];
-    if(password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm) === null) return [true, "The password need at least one uppercase letter, one lowercase letter and one number"];
-    if(password !== passwordConfirmation) return [true, "The passwords not match"];
-    return [false, null];
-}
-
-// ----------------------------- options when are signed up  -----------------------------
-
-// ---------------------------- Log Out ----------------------------
-
-if(document.getElementById("logOut")){
-    document.getElementById("logOut").addEventListener("click", e => {
-        localStorage.removeItem("account");
-        sessionStorage.removeItem("account");
-        window.location.pathname = pathname + "/login.html";
-    });
-}
-
-
-
-// ----------------------------- register  -----------------------------
-
-// if we are in section register execute register()
-if(document.getElementById("registerForm")){
-    const registerForm = document.getElementById("registerForm");
-    registerForm.addEventListener("submit", register);
-}
-
-
-function register(e){
-    e.preventDefault();
-    const form = new FormData(registerForm);
-    const userToCreate = {};
-    for(let entry of form){
-        userToCreate[entry[0]] = entry[1];
-    }
-    const [error, msg] = verifyRegister(userToCreate);
-    if(error) return dispalyAlertMessage(msg, document.getElementById("alert"), "red");
-    accounts.push( new User(...Object.keys(userToCreate).map(e => userToCreate[e])));
-    // set a message when has send to login
-    sessionStorage.setItem("recentLoged", true);
-    // Set account history in local storage
-    localStorage.setItem("accounts", JSON.stringify(accounts));
-    //  Redirect to login
-    window.location.href = "./login.html";
-}
-
-//  ----------------------------- sign in -----------------------------
-
-if(document.getElementById("loginForm")){
-    const loginForm = document.getElementById("loginForm");
-loginForm.addEventListener("submit", function(e) {
-    e.preventDefault();
-    const form = new FormData(document.getElementById("loginForm"));
-    const user_email = form.get("username/email");
-    const password = form.get("password");
-    const stayLogged = form.get("stayLogged") === null ? false : true;
-    verifyLogin(user_email, password, stayLogged);
-});
-}
-
-function verifyUsernameInDB(q){
-    const account = accounts.find(ac => {
-        if(ac.username === q || ac.email === q){    
-            return ac;
-        }
-    });
-    return account === undefined ? false : account;
-}
-
-function verifyLogin(username, password, stayLogged) {
-    const account = verifyUsernameInDB(username);
-    console.log(account);
-
-
-    // 
-    if(account === undefined){
-        // La cuenta no existe
-        dispalyAlertMessage("el usuario no se encuentra", document.getElementById("alert"), "red");
-    }
-
-    // datos correctos
-    else if(password === account.password && account.username === account.username){
-        // cambia el estado global de la app
-        dispalyAlertMessage("Log in successfully", document.getElementById("alert"), "green");
-        let staylogged = stayLogged ? localStorage.setItem("account", JSON.stringify(account)) : sessionStorage.setItem("account", JSON.stringify(account));
-        // redirect to index
-        window.location.href = "./index.html";
-    }else{
-        // el password esta mal
-        dispalyAlertMessage("el password es incorrecto", document.getElementById("alert"), "red");
-    }
-}
-
-
-// ---------------------------------------- Index ----------------------------------------------------------------
-
-// When you was logged in
-
-// Manage aside hover
-
-if(document.getElementById("aside-container")){
-    const aside = document.getElementById("aside-container");
-
-aside.addEventListener("mouseenter", ()=>{
-    document.querySelectorAll(".maximized").forEach(it => {
-        it.classList.remove("hidden");
-    });
-});
-aside.addEventListener("mouseleave", ()=>{
-    document.querySelectorAll(".maximized").forEach(it => {
-        it.classList.add("hidden");
-    });
-});
-}
-
-// Show profile
-if(document.getElementById("profileBtn")){
-    document.getElementById("profileBtn").addEventListener("click", async ()=>{
-        const profile = JSON.parse(localStorage.getItem("account")) || JSON.parse(sessionStorage.getItem("account"));
-        console.log(profile);
-        // const avatar = await fetch(`https://avatars.abstractapi.com/v1/?api_key=54449c83799d414ca1bca0c4519257a1&name=${profile.firstName} ${profile.lastName}`).then(res => res.url);
-        let av = await `https://avatars.abstractapi.com/v1/?api_key=54449c83799d414ca1bca0c4519257a1&name=${profile.firstName} ${profile.lastName}&image_size=440`;
-        const profileCard = `
-        <div class="bg-white font-semibold text-center rounded-3xl border shadow-lg p-10 max-w-xs m-auto">
-                <img class="mb-3 w-32 h-32 rounded-full shadow-lg mx-auto" src="${av}" alt="product designer">
-                <h2 class="text-lg text-gray-700"> ${profile.username} </h2>
-                <h3 class="text-sm text-gray-400 "> ${profile.firstName} ${profile.lastName} </h3>
-                <p class="text-xs text-gray-400 mt-4">status: ${profile.status}</p>
-                <button class="bg-gray-800 px-8 py-2 mt-8 rounded-3xl text-gray-100 font-semibold uppercase tracking-wide">Edit Profile</button>
-            </div>
-        `;
-        const profileDiv = document.createElement('div');
-        profileDiv.innerHTML = profileCard;
-        profileDiv.id = "content";
-        if(document.getElementById("content")) document.getElementById("main").removeChild(document.getElementById("content"));
-        document.getElementById("main").appendChild(profileDiv);
-    
-    });
-}
-
-
-
