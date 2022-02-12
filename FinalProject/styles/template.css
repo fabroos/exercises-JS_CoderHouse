@@ -45,7 +45,8 @@
 .search {
   position: relative;
   height: 50px;
-  width: 400px;
+  width: 100%;
+  max-width: 100%;
 }
 
 .search .input {

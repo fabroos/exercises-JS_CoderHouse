@@ -502,6 +502,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   }
 }
 
+.fixed {
+  position: fixed;
+}
+
 .absolute {
   position: absolute;
 }
@@ -531,8 +535,40 @@ Ensure the default browser behavior of the `hidden` attribute.
   top: 0px;
 }
 
+.right-0 {
+  right: 0px;
+}
+
+.-top-10 {
+  top: -2.5rem;
+}
+
+.-right-10 {
+  right: -2.5rem;
+}
+
+.-top-2 {
+  top: -0.5rem;
+}
+
+.-right-2 {
+  right: -0.5rem;
+}
+
+.top-full {
+  top: 100%;
+}
+
 .z-30 {
   z-index: 30;
+}
+
+.z-10 {
+  z-index: 10;
+}
+
+.z-0 {
+  z-index: 0;
 }
 
 .col-span-4 {
@@ -561,6 +597,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .col-end-13 {
   grid-column-end: 13;
+}
+
+.float-right {
+  float: right;
 }
 
 .m-auto {
@@ -597,6 +637,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-right: 0.75rem;
 }
 
+.mx-5 {
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
+}
+
+.mx-32 {
+  margin-left: 8rem;
+  margin-right: 8rem;
+}
+
 .mt-2 {
   margin-top: 0.5rem;
 }
@@ -613,6 +663,14 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-left: auto;
 }
 
+.mt-3 {
+  margin-top: 0.75rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
 .inline-block {
   display: inline-block;
 }
@@ -623,6 +681,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .grid {
   display: grid;
+}
+
+.hidden {
+  display: none;
 }
 
 .h-full {
@@ -671,12 +733,28 @@ Ensure the default browser behavior of the `hidden` attribute.
   flex: 1 1 0%;
 }
 
+.origin-bottom {
+  transform-origin: bottom;
+}
+
+.origin-top {
+  transform-origin: top;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
 
+.resize {
+  resize: both;
+}
+
 .grid-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .grid-rows-4 {
@@ -721,6 +799,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .gap-2 {
   gap: 0.5rem;
+}
+
+.gap-4 {
+  gap: 1rem;
 }
 
 .overflow-hidden {
@@ -812,12 +894,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding: 0.5rem;
 }
 
+.p-3 {
+  padding: 0.75rem;
+}
+
 .p-20 {
   padding: 5rem;
 }
 
-.p-3 {
-  padding: 0.75rem;
+.p-4 {
+  padding: 1rem;
 }
 
 .px-6 {
@@ -875,6 +961,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-right: 2.5rem;
 }
 
+.py-5 {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
 .pb-8 {
   padding-bottom: 2rem;
 }
@@ -897,6 +988,18 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .pl-3 {
   padding-left: 0.75rem;
+}
+
+.pt-10 {
+  padding-top: 2.5rem;
+}
+
+.pt-32 {
+  padding-top: 8rem;
+}
+
+.pt-40 {
+  padding-top: 10rem;
 }
 
 .text-center {
@@ -926,6 +1029,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
 }
 
 .font-bold {
@@ -972,6 +1080,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-zinc-50 {
   --tw-text-opacity: 1;
   color: rgb(250 250 250 / var(--tw-text-opacity));
+}
+
+.text-black {
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
 .no-underline {
@@ -1046,7 +1159,8 @@ Ensure the default browser behavior of the `hidden` attribute.
 .search {
   position: relative;
   height: 50px;
-  width: 400px;
+  width: 100%;
+  max-width: 100%;
 }
 
 .search .input {
@@ -1130,12 +1244,60 @@ Ensure the default browser behavior of the `hidden` attribute.
   .sm\:m-20 {
     margin: 5rem;
   }
+
+  .sm\:block {
+    display: block;
+  }
+
+  .sm\:hidden {
+    display: none;
+  }
 }
 
 @media (min-width: 768px) {
+  .md\:relative {
+    position: relative;
+  }
+
+  .md\:mx-4 {
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  .md\:mt-0 {
+    margin-top: 0px;
+  }
+
+  .md\:block {
+    display: block;
+  }
+
+  .md\:flex {
+    display: flex;
+  }
+
+  .md\:hidden {
+    display: none;
+  }
+
+  .md\:flex-row {
+    flex-direction: row;
+  }
+
   .md\:px-0 {
     padding-left: 0px;
     padding-right: 0px;
+  }
+
+  .md\:hover\:scale-110:hover {
+    --tw-scale-x: 1.1;
+    --tw-scale-y: 1.1;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+  }
+
+  .md\:hover\:text-black:hover {
+    --tw-text-opacity: 1;
+    color: rgb(0 0 0 / var(--tw-text-opacity));
   }
 }
 

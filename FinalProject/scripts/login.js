@@ -29,30 +29,22 @@ console.log(users);
 
 
 class User {
-    constructor(name, email, password) {
+    constructor(name, email, password, cart = []) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.logged = false;
-        this.status = "disponible";
-        this.statusHistory = [];
-        this.chats = [];
+        this.cart = cart;
     }
     // Future uses of methods
-    changeStatus(newStatus) {
-        this.statusHistory.push(this.status);
-        this.status = newStatus;
-    }
     changeName(newName) {
         this.name = newName;
     }
     changePassword(newPassword) {
         this.password = newPassword;
     }
-    createChat(name) {
-        this.chats.push(name);
-    }
 }
+
+
 // obteniendo las referencias de los dos forms
 const loginForm = document.getElementById("loginForm");
 const registerForm = document.getElementById("registerForm");
