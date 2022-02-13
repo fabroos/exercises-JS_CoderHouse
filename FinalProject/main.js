@@ -5,20 +5,30 @@ const ordering = {
 
 const user = JSON.parse(localStorage.getItem("user")) || JSON.parse(sessionStorage.getItem("user"));
 
+const cart = JSON.parse(localStorage.getItem("cart")) || {
+	products: [],
+	total: 0
+};
+
 
 // Servicios
 
 async function getProducts() {
 	let res;
-	await $.ajax({
-		type: "GET",
-		url: "https://fakestoreapi.com/products",
-		data: "data",
-		dataType: "JSON",
-		success: function (response) {
-			res = response;
-		}
-	});
+	try {
+		await $.ajax({
+			type: "GET",
+			url: "https://fakestoreapi.com/prodsucts",
+			data: "data",
+			dataType: "JSON",
+			success: function (response) {
+				res = response;
+			},
+
+		});
+	} catch (e) {
+		res = false;
+	}
 	return res;
 }
 
@@ -41,6 +51,14 @@ async function getSingleProduct(id) {
 
 
 // funcion para mostrar un producto solo
+
+function handleCartBtn(product) {
+	if (localStorage.getItem("cart")) {
+
+	} else {
+		createCart();
+	}
+}
 
 function displaySingleProduct(product, products) {
 	console.log(product);
@@ -68,12 +86,13 @@ function displaySingleProduct(product, products) {
 					<div class="flex justify-between mt-2">
 						<p class="pt-1  text-gray-900">$${price}</p>
 					<div class="flex">
-							<svg class="h-6 w-6 fill-current mx-2 text-gray-500 hover:text-black " xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 24 24">
-							<path
-								d="M12,4.595c-1.104-1.006-2.512-1.558-3.996-1.558c-1.578,0-3.072,0.623-4.213,1.758c-2.353,2.363-2.352,6.059,0.002,8.412 l7.332,7.332c0.17,0.299,0.498,0.492,0.875,0.492c0.322,0,0.609-0.163,0.792-0.409l7.415-7.415 c2.354-2.354,2.354-6.049-0.002-8.416c-1.137-1.131-2.631-1.754-4.209-1.754C14.513,3.037,13.104,3.589,12,4.595z M18.791,6.205 c1.563,1.571,1.564,4.025,0.002,5.588L12,18.586l-6.793-6.793C3.645,10.23,3.646,7.776,5.205,6.209 c0.76-0.756,1.754-1.172,2.799-1.172s2.035,0.416,2.789,1.17l0.5,0.5c0.391,0.391,1.023,0.391,1.414,0l0.5-0.5 C14.719,4.698,17.281,4.702,18.791,6.205z" />
+						<svg class="h-6 w-6 fill-current mx-2 text-gray-500 hover:text-black " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+							<path d="M12,4.595c-1.104-1.006-2.512-1.558-3.996-1.558c-1.578,0-3.072,0.623-4.213,1.758c-2.353,2.363-2.352,6.059,0.002,8.412 l7.332,7.332c0.17,0.299,0.498,0.492,0.875,0.492c0.322,0,0.609-0.163,0.792-0.409l7.415-7.415 c2.354-2.354,2.354-6.049-0.002-8.416c-1.137-1.131-2.631-1.754-4.209-1.754C14.513,3.037,13.104,3.589,12,4.595z M18.791,6.205 c1.563,1.571,1.564,4.025,0.002,5.588L12,18.586l-6.793-6.793C3.645,10.23,3.646,7.776,5.205,6.209 c0.76-0.756,1.754-1.172,2.799-1.172s2.035,0.416,2.789,1.17l0.5,0.5c0.391,0.391,1.023,0.391,1.414,0l0.5-0.5 C14.719,4.698,17.281,4.702,18.791,6.205z" />
 						</svg>
-							<svg title="Add to cart"  class=" h-6 w-6 cursor-pointer fill-current text-gray-500 mx-2 hover:text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"><path fill="none" d="M0 0h24v24H0z"/><path fill="currentColor" d="M4 16V4H2V2h3a1 1 0 0 1 1 1v12h12.438l2-8H8V5h13.72a1 1 0 0 1 .97 1.243l-2.5 10a1 1 0 0 1-.97.757H5a1 1 0 0 1-1-1zm2 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm12 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>
+						<svg id="addToCartBtn" title="Add to cart"  class=" h-6 w-6 cursor-pointer fill-current text-gray-500 mx-2 hover:text-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18">
+							<path fill="none" d="M0 0h24v24H0z"/>
+							<path fill="currentColor" d="M4 16V4H2V2h3a1 1 0 0 1 1 1v12h12.438l2-8H8V5h13.72a1 1 0 0 1 .97 1.243l-2.5 10a1 1 0 0 1-.97.757H5a1 1 0 0 1-1-1zm2 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm12 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
+						</svg>
 					</div>
 					</div>
 					
@@ -85,6 +104,7 @@ function displaySingleProduct(product, products) {
 		displayProducts(products, "");
 		$("#store").show();
 	});
+	$("#addToCartBtn").click((e) => handleCartBtn(product));
 }
 
 // funcion para devolver el producto con el id pasado como parametro
@@ -133,17 +153,24 @@ function displayProducts(products, query, ascendent, order) {
 			$("#store").hide();
 		});
 	} else {
-		$("#galleryNav").append(`<h4 class="text-2xl font-bold col-span-4 p-3 text-center">No resoults found</h4>`);
+		$("#galleryNav").append(`<h4 class="text-2xl font-bold col-span-4 p-3 text-center">No results found</h4>`);
 	}
 }
 
 
 // Setting a funtion to get the prodcts and save him in sessionStorage to save resourses 
 
+function errorPage() {
+	$("#galleryNav").empty();
+	$("#galleryNav").append(`
+		<div class="col-span-4 font-bold text-center p-3 text-red-600"><h2>Error loading results reload the page or wait a minute</h2></div>
+	`);
+}
+
 async function updateProducts(query = "") {
 	$("#galleryNav").append(`<img class="col-span-4 mx-auto" src="https://c.tenor.com/tEBoZu1ISJ8AAAAC/spinning-loading.gif">`);
 	const products = JSON.parse(sessionStorage.getItem("products")) || await getProducts();
-	console.log($("#opt").val());
+	if (!products) return errorPage();
 	if (!sessionStorage.getItem("products")) sessionStorage.setItem("products", JSON.stringify(products));
 
 	$("#galleryNav").empty();
@@ -155,8 +182,8 @@ async function updateProducts(query = "") {
 
 function ToggleSort() {
 	ordering.sorted = !ordering.sorted;
-	$("#toggleSort span").text(ordering.sorted ? "	↑" : "	↓")
 	updateProducts();
+	$("#toggleSort span").text(ordering.sorted ? "	↑" : "	↓");
 }
 
 function toggleSearch(e) {
@@ -187,6 +214,11 @@ function orderBy(list, by) {
 
 
 // Functions to cart
+// class productInCart {
+// 	constructor({price})
+// };
+
+
 
 function addToList(item) {
 
@@ -196,7 +228,6 @@ function createCart(firstItem) {
 	localStorage.setItem("cart", {
 		products: [firstItem],
 		totalCart: firstItem.price,
-
 	});
 }
 
