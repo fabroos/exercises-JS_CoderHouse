@@ -4,7 +4,6 @@ const getUser = () => {
 
 };
 
-
 // revisando si hay un usuario logeado y preguntando si el quiere ingresar o irse
 
 const user = getUser();
@@ -30,55 +29,51 @@ console.log(users);
 
 
 class User {
-    constructor(name, email, password) {
+    constructor(name, email, password, cart = []) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.logged = false;
-        this.status = "disponible";
-        this.statusHistory = [];
-        this.chats = [];
-        this.id = users.length == 0 ? 1 : users[users.length - 1].id + 1;
+        this.cart = cart;
     }
     // Future uses of methods
-    changeStatus(newStatus) {
-        this.statusHistory.push(this.status);
-        this.status = newStatus;
-    }
     changeName(newName) {
         this.name = newName;
     }
     changePassword(newPassword) {
         this.password = newPassword;
     }
-    createChat(name) {
-        this.chats.push(name);
-    }
 }
+
+
 // obteniendo las referencias de los dos forms
 const loginForm = document.getElementById("loginForm");
 const registerForm = document.getElementById("registerForm");
 
-console.log(!!$(".xd").length)
 
 function displayMsg(err, msg, el) {
-    if ($("#alertMsg").length) $("#alertMsg").remove();
-
     const className = err ? "flex w-full max-w-sm mx-auto overflow-hidden bg-red-500 rounded-lg shadow-md col-span-2" : "flex w-full max-w-sm mx-auto overflow-hidden bg-green-500 rounded-lg shadow-md col-span-2";
+    const div = document.createElement("div");
+    div.classList.value = className;
     const color = !err ? "green" : "red";
-    $(el).append(`<div class="${className}" id="alertMsg">
-                    <div class="flex items-center justify-center w-12 bg-${color}-500"></div>
-                    <div class="px-2 py-1 -mx-3">
-                        <div class="mx-3 flex gap-2">
-                            <span class="font-semibold text-sm text-white">${err ? 'Error' : 'Congratulations!'}</span>
-                            <p class="text-sm text-white">
-                            ${msg}
-                            </p>
-                        </div>
-                    </div>
-                </div>`);
+    const msgTemplate = `
 
+                            <div class="flex items-center justify-center w-12 bg-${color}-500"></div>
+                            <div class="px-2 py-1 -mx-3">
+                                <div class="mx-3 flex gap-2">
+                                    <span class="font-semibold text-sm text-white">${err ? 'Error' : 'Congratulations!'}</span>
+                                    <p class="text-sm text-zinc-50">
+                                    ${msg}
+                                    </p>
+                                </div>
+                            </div>
+
+`;
+    div.innerHTML = msgTemplate;
+    div.id = "alertMsg";
+    if (document.getElementById("alertMsg")) document.getElementById("alertMsg").parentElement.removeChild(document.getElementById("alertMsg"));
+    el.appendChild(div);
 }
+
 
 loginForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -100,7 +95,6 @@ loginForm.addEventListener("submit", (e) => {
     if (stayLogged) localStorage.setItem("user", JSON.stringify(userMatch));
     else sessionStorage.setItem("user", JSON.stringify(userMatch));
     window.location.href = "./index.html";
-
 });
 
 function verifyRegister(name, emailAddress, password) {
@@ -113,7 +107,7 @@ function verifyRegister(name, emailAddress, password) {
     return [false, null];
 }
 
-$(registerForm).submit(function (e) {
+registerForm.addEventListener("submit", e => {
     e.preventDefault();
     const form = new FormData(registerForm);
     const name = form.get("name");
