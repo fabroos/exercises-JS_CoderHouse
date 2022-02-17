@@ -29,11 +29,15 @@ console.log(users);
 
 
 class User {
-    constructor(name, email, password, cart = []) {
+    constructor(name, email, password) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.cart = cart;
+        this.cart = {
+            products: [],
+            total: 0,
+            quantity: 0
+        };
     }
     // Future uses of methods
     changeName(newName) {

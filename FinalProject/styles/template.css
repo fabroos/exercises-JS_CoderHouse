@@ -6,13 +6,37 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap");
 
-* {
-  font-family: "Montserrat", sans-serif;
+
+.animated {
+  animation-duration: .4s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-out;
+}
+
+
+@keyframes bounce {
+
+  100% {
+    transform: translateY(0);
+  }
+
+  40% {
+    transform: translateY(-5px);
+  }
+
+}
+
+.bounce {
+  animation-name: bounce;
 }
 
 .bg-red-500 {
   --tw-bg-opacity: 1;
   background-color: rgb(239 68 68 / var(--tw-bg-opacity));
+}
+
+html {
+  font-family: -apple-system, "Montserrat"ui-sans-serif, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 .bg-green-500 {
@@ -58,6 +82,10 @@
 
   transition: padding, 1s ease-in;
   outline: none;
+}
+
+.a {
+  color: red;
 }
 
 .active .input {
