@@ -21,6 +21,11 @@ $(document).ready(function () {
         const value = user[id];
         $(element).val(value);
     });
+    $('#logOutBtn').click(e => {
+        localStorage.removeItem("user")
+        sessionStorage.removeItem("user")
+        location.href = './index.html'
+    })
     $("#editBtn").click(e => {
         $(".input").each(function (index, element) {
             $(element).removeAttr("disabled");
@@ -35,13 +40,6 @@ $(document).ready(function () {
         const email = $(".input")[1].value;
         const password = $(".input")[2].value;
         const [err, msg] = verifyRegister($(".input")[0].value, $(".input")[1].value, $(".input")[2].value);
-
-        console.log({
-            userMatch,
-            user,
-            users,
-            err
-        });
         if (userMatch > -1 && !err) {
             user.name = name;
             user.email = email;
@@ -62,7 +60,6 @@ $(document).ready(function () {
             });
 
         } else {
-            console.log('a');
             $("#msg").text(msg);
         }
     });

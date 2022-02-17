@@ -219,7 +219,6 @@ function errorPage() {
 
 //Display a signle product with more details (Route to item) 
 function displaySingleProduct(product, products) {
-	console.log(product);
 	const {
 		title,
 		image,
@@ -353,7 +352,7 @@ $(document).ready(async function () {
 	// Verify if user is loggeado y manejar los coponentes ligados a esto
 	$(".heroSection").append(hero());
 	if (logged) {
-		$("#loginBtn").replaceWith(`<li class="hover:text-black hover:scale-110 cursor-pointer mt-4 md:mt-0" id="profileBtn">${user.name}</li>`);
+		$("#loginBtn").replaceWith(`<li id='profileBtn' class="hover:text-black hover:scale-110 cursor-pointer mt-4 md:mt-0" id="profileBtn" ><a href='./profile.html'>${user.name}</a></li>`);
 	}
 	// Inicio la lista de productos
 	updateProducts();
@@ -380,7 +379,6 @@ $(document).ready(async function () {
 			valueChanged = true;
 		}
 		if (valueChanged) {
-			console.log(this);
 			updateProducts(this.value.toLowerCase());
 		}
 	});

@@ -7,10 +7,9 @@ const getUser = () => {
 // revisando si hay un usuario logeado y preguntando si el quiere ingresar o irse
 
 const user = getUser();
-console.log(user);
+
 
 if (user !== null) {
-    console.log(window.location.pathname);
     if (window.location.pathname == "/login.html") {
         const out = confirm("Ya hay un usuario logeado, quieres salir?");
         if (!out) {
@@ -25,7 +24,7 @@ if (user !== null) {
 
 // obteniendo lista de usuarios para realizar las proximas comprobaciones
 const users = JSON.parse(localStorage.getItem("users")) || [];
-console.log(users);
+
 
 
 class User {
@@ -89,7 +88,7 @@ loginForm.addEventListener("submit", (e) => {
     const userMatch = users.find(
         (user) => user.email == emailAddress && user.password == password
     );
-    console.log(userMatch);
+
     if (userMatch === undefined)
         return displayMsg(
             true,
