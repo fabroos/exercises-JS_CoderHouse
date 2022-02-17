@@ -1,6 +1,6 @@
 ﻿# Excercises-JS_CoderHosue
 
-<a href="https://www.coderhouse.com"><img src="https://res.cloudinary.com/hdsqazxtw/image/upload/v1579032128/coder-logo-white_t41xzb.png" style="margin: auto; width: 100%; filter: drop-shadow(30px 10px 4px #4444dd);" ></a>
+<a href="https://www.coderhouse.com"><img src="https://res.cloudinary.com/hdsqazxtw/image/upload/v1579032128/coder-logo-white_t41xzb.png" style="margin: auto; width: 100%; filter: drop-shadow(30px 10px 4px #4444dd); " ></a>
 <p>Ejercicios y desafios de mi cursada en Coder House <a href="https://www.coderhouse.com">#CoderHouse</a></p>
 <h3>Desafios: </h3> 
 <ul>
